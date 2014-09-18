@@ -1,68 +1,189 @@
-module.exports = function (grunt) {
+// Generated on 2014-09-18 using generator-angular-component 0.2.3
+'use strict';
 
+module.exports = function(grunt) {
+
+  // Configurable paths
+  var yoConfig = {
+    livereload: 35729,
+    src: 'src',
+    dist: 'dist',
+	name: 'disqusApi'
+  };
+
+  // Livereload setup
+  var lrSnippet = require('connect-livereload')({port: yoConfig.livereload});
+  var mountFolder = function (connect, dir) {
+    return connect.static(require('path').resolve(dir));
+  };
+
+  // Load all grunt tasks
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
+  // Project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    library: grunt.file.readJSON('bower.json'),
-    concat: {
-      options: {
-        separator: ''
-      },
-      library: {
-        src: [
-          'src/disqusApi.js'
-        ],
-        dest: 'dist/disqusApi.js'
+    yo: yoConfig,
+    meta: {
+      banner: '/**\n' +
+      ' * <%= pkg.name %>\n' +
+      ' * @version v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+      ' * @link <%= pkg.homepage %>\n' +
+      ' * @author <%= pkg.author.name %> <<%= pkg.author.email %>>\n' +
+      ' * @license MIT License, http://www.opensource.org/licenses/MIT\n' +
+      ' */\n'
+    },
+    open: {
+      server: {
+        path: 'http://localhost:<%= connect.options.port %>'
       }
     },
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+    clean: {
+      dist: {
+        files: [{
+          dot: true,
+          src: [
+            '.tmp',
+            '<%= yo.dist %>/*',
+            '!<%= yo.dist %>/.git*'
+          ]
+        }]
       },
-      jid: {
+      server: '.tmp'
+    },
+    watch: {
+      gruntfile: {
+        files: '<%= jshint.gruntfile.src %>',
+        tasks: ['jshint:gruntfile']
+      },
+      less: {
+        files: ['<%= yo.src %>/{,*/}*.less'],
+        tasks: ['less:dist']
+      },
+      app: {
+        files: [
+          '<%= yo.src %>/{,*/}*.html',
+          '{.tmp,<%= yo.src %>}/{,*/}*.css',
+          '{.tmp,<%= yo.src %>}/{,*/}*.js'
+        ],
+        options: {
+          livereload: yoConfig.livereload
+        }
+      },
+      test: {
+        files: '<%= jshint.test.src %>',
+        tasks: ['jshint:test', 'qunit']
+      }
+    },
+    connect: {
+      options: {
+        port: 9000,
+        hostname: '0.0.0.0' // Change this to '0.0.0.0' to access the server from outside.
+      },
+      livereload: {
+        options: {
+          middleware: function (connect) {
+            return [
+              lrSnippet,
+              mountFolder(connect, '.tmp'),
+              mountFolder(connect, yoConfig.src)
+            ];
+          }
+        }
+      }
+    },
+    less: {
+      options: {
+        // dumpLineNumbers: 'all',
+        paths: ['<%= yo.src %>']
+      },
+      dist: {
         files: {
-          'dist/disqusApi.min.js': ['<%= concat.library.dest %>']
+          '<%= yo.src %>/<%= yo.name %>.css': '<%= yo.src %>/<%= yo.name %>.less'
         }
       }
     },
     jshint: {
-      beforeConcat: {
-        src: ['gruntfile.js', 'src/*.js']
-      },
-      afterConcat: {
-        src: [
-          '<%= concat.library.dest %>'
-        ]
-      },
-      options: {
-        // options here to override JSHint defaults
-        globals: {
-          jQuery: true,
-          console: true,
-          module: true,
-          document: true,
-          angular: true
+      gruntfile: {
+        options: {
+          jshintrc: '.jshintrc'
         },
-        globalstrict: false
+        src: 'Gruntfile.js'
+      },
+      src: {
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        src: ['<%= yo.src %>/{,*/}*.js']
+      },
+      test: {
+        options: {
+          jshintrc: 'test/.jshintrc'
+        },
+        src: ['test/**/*.js']
       }
     },
-    watch: {
+    karma: {
       options: {
-        livereload: true
+        configFile: 'karma.conf.js',
+        browsers: ['PhantomJS']
       },
-      files: [
-        'Gruntfile.js',
-        'src/*'
-      ],
-      tasks: ['default']
+      unit: {
+        singleRun: true
+      },
+      server: {
+        autoWatch: true
+      }
+    },
+    ngmin: {
+      options: {
+        banner: '<%= meta.banner %>'
+      },
+      dist: {
+        src: ['<%= yo.src %>/<%= yo.name %>.js'],
+        dest: '<%= yo.dist %>/<%= yo.name %>.js'
+      }
+    },
+    concat: {
+      options: {
+        banner: '<%= meta.banner %>',
+        stripBanners: true
+      },
+      dist: {
+        src: ['<%= yo.src %>/<%= yo.name %>.js'],
+        dest: '<%= yo.dist %>/<%= yo.name %>.js'
+      }
+    },
+    uglify: {
+      options: {
+        banner: '<%= meta.banner %>'
+      },
+      dist: {
+        src: '<%= concat.dist.dest %>',
+        dest: '<%= yo.dist %>/<%= yo.name %>.min.js'
+      }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.registerTask('test', [
+    'jshint',
+    'karma:unit'
+  ]);
 
-  grunt.registerTask('default', ['jshint:beforeConcat', 'concat', 'jshint:afterConcat', 'uglify']);
-  grunt.registerTask('livereload', ['default', 'watch']);
+  grunt.registerTask('build', [
+    'clean:dist',
+    'less:dist',
+    'ngmin:dist',
+    'uglify:dist'
+  ]);
+
+  grunt.registerTask('release', [
+    'test',
+    'bump-only',
+    'dist',
+    'bump-commit'
+  ]);
+
+  grunt.registerTask('default', ['build']);
 
 };
