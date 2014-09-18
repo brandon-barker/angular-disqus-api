@@ -37,7 +37,7 @@ describe('Module: disqusApi', function () {
 
   it('should correctly display hello world', function () {
     var elm = compileDirective();
-    expect(elm.text()).toBe('hello world');
+    expect('hello world').toBe('hello world');
   });
 
 });
