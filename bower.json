@@ -1,0 +1,28 @@
+{
+  "name": "angular-disqus-api",
+  "version": "0.1.0",
+  "authors": [
+    "Brandon Barker <skinty@gmail.com>"
+  ],
+  "description": "A Disqus API wrapper for AngularJS featuring helpful directives for easily adding widgets to your pages",
+  "main": "src/disqusApi.js",
+  "keywords": [
+    "disqus",
+    "api"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.0.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.0.7",
+    "angular-scenario": "~1.0.7"
+  }
+}
