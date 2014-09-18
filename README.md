@@ -1,4 +1,4 @@
-angular-disqus-api
+angular-disqus-api [![Build Status](https://travis-ci.org/brandon-barker/angular-disqus-api.svg?branch=master)](https://travis-ci.org/brandon-barker/angular-disqus-api)
 ==================
 
 A Disqus API wrapper for AngularJS featuring helpful directives for easily adding widgets to your pages
