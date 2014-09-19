@@ -35,6 +35,18 @@ $ bower install angular-disqus-api
 
 You will have access to a ```disqusApi``` service which you can inject into your controllers and use to retrieve data from the API.
 
+#### Methods
+
+* ```getRequest(category, method, params)```
+
+##### Params
+
+> ```category```: The Disqus API category, eg: `forum`
+
+> ```method```: The Disqus API method to call, eg: `listPosts`
+
+> ```params```: All supported parameters detailed in the [Disqus API](https://disqus.com/api/docs/)
+
 #### Example
 
 ```js
