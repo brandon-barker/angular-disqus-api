@@ -39,13 +39,13 @@ You will have access to a ```disqusApi``` service which you can inject into your
 
 * ```getRequest(category, method, params)```
 
+> A generic method supporting all GET requests to the Disqus API (```api_key``` and ```forum``` always passed by default, all other parameters are optional)
+
 ##### Params
 
-> ```category```: The Disqus API category, eg: `forum`
-
-> ```method```: The Disqus API method to call, eg: `listPosts`
-
-> ```params```: All supported parameters detailed in the [Disqus API](https://disqus.com/api/docs/)
+* ```category```: The Disqus API category, eg: `forum`
+* ```method```: The Disqus API method to call, eg: `listPosts`
+* ```params```: All supported parameters detailed in the [Disqus API](https://disqus.com/api/docs/)
 
 #### Example
 
