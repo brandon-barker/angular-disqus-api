@@ -37,7 +37,7 @@ You will have access to a ```disqusApi``` service which you can inject into your
 
 #### Methods
 
-* ```getRequest(category, method, params)```
+* ```get(category, method, params)```
 
 > A generic method supporting all GET requests to the Disqus API (```api_key``` and ```forum``` always passed by default, all other parameters are optional)
 
@@ -57,7 +57,7 @@ angular.module('myApp').controller('myCtrl', ['$scope', 'disqusApi', function ($
       related: 'thread'
     }
 
-    disqusApi.getRequest('forums', 'listPosts', params).then(function (comments) {
+    disqusApi.get('forums', 'listPosts', params).then(function (comments) {
         $scope.comments = comments;
         console.log(comments);
     });
