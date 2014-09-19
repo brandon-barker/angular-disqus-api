@@ -6,6 +6,7 @@ A Disqus API wrapper for AngularJS featuring helpful directives for easily addin
 ## Installation
 
 #### via bower:
+
 ```
 $ bower install angular-disqus-api
 ```
@@ -32,9 +33,9 @@ $ bower install angular-disqus-api
 
 ## Service
 
-You will have access to a ```disqusApi``` service which you can use to retrieve data from the API.
+You will have access to a ```disqusApi``` service which you can inject into your controllers and use to retrieve data from the API.
 
-Example:
+#### Example
 
 ```js
 angular.module('myApp').controller('myCtrl', ['$scope', 'disqusApi', function ($scope, disqusApi) {
@@ -50,3 +51,23 @@ angular.module('myApp').controller('myCtrl', ['$scope', 'disqusApi', function ($
     });
 }]);
 ```
+
+## Directives
+
+There is also a helpful directive included for displaying recent comments across your forum, for example on your home page or in a news feed of some kind. This was created due to the Recent Comments widget being discontinued by Disqus.
+
+#### Example
+
+##### As an element
+
+```
+<recent-comments params="{limit: 5, related:'thread'}"></recent-comments>
+```
+
+##### As an attribute
+
+```
+<div recent-comments params="{limit: 5, related:'thread'}"></div>
+```
+
+> You can pass through any params accepted by the Disqus API, either as an inline object in your HTML or as an object on ```$scope```. This directive uses the ```listPosts``` method on the ```forum``` category in the [Disqus API](https://disqus.com/api/docs/forums/listPosts/)
