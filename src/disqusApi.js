@@ -65,7 +65,7 @@
     };
 
     var service = {
-      getRequest: getRequest
+      get: getRequest
     };
 
     return service;
@@ -117,7 +117,7 @@
       controller: ['$scope', 'disqusApi', function ($scope, disqusApi) {
         var params = $scope.params || {};
 
-        disqusApi.getRequest('forums', 'listPosts', params).then(function (comments) {
+        disqusApi.get('forums', 'listPosts', params).then(function (comments) {
           $scope.comments = comments;
           console.log(comments);
         });
