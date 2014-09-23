@@ -102,8 +102,8 @@
         '</div>' +
         '<div class="col-lg-10">' +
         '<span><a ng-href="{{comment.author.profileUrl}}" target="_blank">{{comment.author.name}}</a> <small>- {{comment.createdAt | date:"medium"}}</small></span>' +
-        '<div>' +
-        '{{comment.raw_message}} <br /> ' +
+        '<div style="white-space: pre-line;">' +
+        '{{comment.raw_message}}' +
         '</div>' +
         '<div ng-repeat="image in comment.media">' +
         '<a ng-href="{{image.location}}" target="_blank"><img ng-src="{{image.thumbnailURL}}" class="img-responsive" /></a>' +
